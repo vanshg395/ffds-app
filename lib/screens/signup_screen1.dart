@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import './signup_screen2.dart';
 import '../widgets/logo_text.dart';
 import '../widgets/rounded_button.dart';
 
@@ -28,6 +29,7 @@ class _SignupScreen1State extends State<SignupScreen1> {
     TextEditingController(),
   ];
   String enteredOtp = '';
+  String _errorText;
 
   void generateOtp() {
     _generatedOtp = Random().nextInt(9000) + 1000;
@@ -40,7 +42,9 @@ class _SignupScreen1State extends State<SignupScreen1> {
       // final response = await http.post(
       //     'https://api.msg91.com/api/v5/otp?authkey=309733AvsnLTQSW5e00de5eP1&template_id=5e00e66cd6fc0561ae3cc993&extra_param={"OTP":$_generatedOtp}&mobile=${'+91' + _phoneNumber.text}&invisible=1&otp=OTP to send and verify. If not sent, OTP will be generated.&userip=IPV4 User IP&email=Email ID');
       // print(response.body);
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   void verifyOtp() {
@@ -51,6 +55,7 @@ class _SignupScreen1State extends State<SignupScreen1> {
     enteredOtp = temp;
     if (_generatedOtp.toString() == enteredOtp) {
       print('Verified');
+      Navigator.of(context).pushReplacementNamed(SignupScreen2.routeName);
     } else {
       print('Invalid Otp');
       enteredOtpController.forEach((digit) {
@@ -131,6 +136,8 @@ class _SignupScreen1State extends State<SignupScreen1> {
                 hintStyle: TextStyle(
                   color: Color(0xFFBDB3B3),
                 ),
+                errorText: _errorText,
+                errorStyle: TextStyle(fontSize: 14),
               ),
               keyboardType: TextInputType.phone,
             ),
@@ -144,19 +151,9 @@ class _SignupScreen1State extends State<SignupScreen1> {
               onPressed: () {
                 setState(() {
                   if (_phoneNumber.text.length != 10) {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text('Invalid Phone Number'),
-                        content: Text('Please enter a valid phone number'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Ok'),
-                            onPressed: () => Navigator.of(context).pop(),
-                          )
-                        ],
-                      ),
-                    );
+                    setState(() {
+                      _errorText = 'Please enter a valid phone number.';
+                    });
                     return;
                   }
                   sendOtp();
@@ -206,6 +203,7 @@ class _SignupScreen1State extends State<SignupScreen1> {
               onPressed: () {
                 _phoneNumber.clear();
                 setState(() {
+                  _errorText = '';
                   _isOtpSent = false;
                 });
               },
@@ -256,7 +254,10 @@ class _SignupScreen1State extends State<SignupScreen1> {
                         ),
                       ),
                       keyboardType: TextInputType.number,
-                      onChanged: (_) {
+                      onChanged: (value) {
+                        if (value == '') {
+                          return;
+                        }
                         FocusScope.of(context).requestFocus(otpFocusNode2);
                       },
                     ),
@@ -289,7 +290,11 @@ class _SignupScreen1State extends State<SignupScreen1> {
                         ),
                       ),
                       keyboardType: TextInputType.number,
-                      onChanged: (_) {
+                      onChanged: (value) {
+                        if (value == '') {
+                          FocusScope.of(context).requestFocus(otpFocusNode1);
+                          return;
+                        }
                         FocusScope.of(context).requestFocus(otpFocusNode3);
                       },
                     ),
@@ -322,7 +327,11 @@ class _SignupScreen1State extends State<SignupScreen1> {
                         ),
                       ),
                       keyboardType: TextInputType.number,
-                      onChanged: (_) {
+                      onChanged: (value) {
+                        if (value == '') {
+                          FocusScope.of(context).requestFocus(otpFocusNode2);
+                          return;
+                        }
                         FocusScope.of(context).requestFocus(otpFocusNode4);
                       },
                     ),
@@ -355,7 +364,11 @@ class _SignupScreen1State extends State<SignupScreen1> {
                         ),
                       ),
                       keyboardType: TextInputType.number,
-                      onChanged: (_) {
+                      onChanged: (value) {
+                        if (value == '') {
+                          FocusScope.of(context).requestFocus(otpFocusNode3);
+                          return;
+                        }
                         verifyOtp();
                       },
                     ),
@@ -433,7 +446,7 @@ class _SignupScreen1State extends State<SignupScreen1> {
                               Color(0xFF06AD71),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     _isOtpSent ? buildScreenB() : buildScreenA(),
