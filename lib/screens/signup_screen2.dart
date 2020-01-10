@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -45,46 +46,44 @@ class _SignupScreen2State extends State<SignupScreen2> {
       final response = await http.post(
           'https://ffds-new.herokuapp.com/register?email=${_data['email']}&name=${_data['name']}&gender=${_data['gender']}&password=${_data['password']}');
       final responseBody = json.decode(response.body);
-      setState(() {
-        _isLoading = false;
-      });
 
-      if (responseBody == 'Registered Successfully') {
-        showDialog(
+      if (responseBody == 'Registered Successful') {
+        final emailResponse = await http.post(
+            'https://ffds-new.herokuapp.com/send?mailto=${_data['email']}');
+        final emailResponseBody = json.decode(emailResponse.body);
+
+        if (emailResponseBody == 'error') {
+          throw Exception('Mail could not be sent.');
+        }
+        await AwesomeDialog(
           context: context,
-          child: AlertDialog(
-            title: Text('Success'),
-            content: Text(responseBody),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          ),
-        );
+          dialogType: DialogType.SUCCES,
+          animType: AnimType.BOTTOMSLIDE,
+          tittle: 'Registered Successfully',
+          desc:
+              'A verification link has been sent to your email. Please verify your account.',
+          btnOkOnPress: () {},
+        ).show();
         Navigator.of(context).pushNamedAndRemoveUntil(
             LoginScreen.routeName, ModalRoute.withName(HomeScreen.routeName));
       } else {
-        showDialog(
+        await AwesomeDialog(
           context: context,
-          child: AlertDialog(
-            title: Text('Error'),
-            content: Text(responseBody),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          ),
-        );
+          dialogType: DialogType.ERROR,
+          animType: AnimType.BOTTOMSLIDE,
+          tittle: 'Invalid Email',
+          desc: 'This email is already in use. Please use some other email.',
+          btnOkOnPress: () {},
+        ).show();
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      passwordController.clear();
+      _gender = null;
+      _isLoading = false;
+    });
   }
 
   @override
@@ -132,7 +131,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                               Color(0xFF06AD71),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     _isLoading
@@ -145,8 +144,11 @@ class _SignupScreen2State extends State<SignupScreen2> {
                           )
                         : Expanded(
                             child: Container(
+                              alignment: Alignment.center,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
+                                horizontal: 30,
+                                vertical: 10,
+                              ),
                               child: Form(
                                 key: _formKey,
                                 child: SingleChildScrollView(
@@ -158,7 +160,6 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                       Text(
                                         'Full Name',
                                         style: TextStyle(
-                                          fontFamily: 'BarlowSemiCondensed',
                                           fontSize: 24,
                                         ),
                                       ),
@@ -214,7 +215,6 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                       Text(
                                         'VIT Gmail',
                                         style: TextStyle(
-                                          fontFamily: 'BarlowSemiCondensed',
                                           fontSize: 24,
                                         ),
                                       ),
@@ -277,7 +277,6 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                       Text(
                                         'Password',
                                         style: TextStyle(
-                                          fontFamily: 'BarlowSemiCondensed',
                                           fontSize: 24,
                                         ),
                                       ),
@@ -338,7 +337,6 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                       Text(
                                         'Confirm Password',
                                         style: TextStyle(
-                                          fontFamily: 'BarlowSemiCondensed',
                                           fontSize: 24,
                                         ),
                                       ),
@@ -396,48 +394,49 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                       Text(
                                         'Gender',
                                         style: TextStyle(
-                                          fontFamily: 'BarlowSemiCondensed',
                                           fontSize: 24,
                                         ),
                                       ),
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Row(
-                                        children: <Widget>[
-                                          Radio(
-                                            activeColor: Color(0xFF06aE71),
-                                            value: Gender.Male,
-                                            groupValue: _gender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _gender = value;
-                                                _data['gender'] =
-                                                    describeEnum(_gender);
-                                              });
-                                            },
-                                          ),
-                                          Text('Male'),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.3,
-                                          ),
-                                          Radio(
-                                            activeColor: Color(0xFF06aE71),
-                                            value: Gender.Female,
-                                            groupValue: _gender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _gender = value;
-                                                _data['gender'] =
-                                                    describeEnum(_gender);
-                                              });
-                                            },
-                                          ),
-                                          Text('Female'),
-                                        ],
+                                      FittedBox(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Radio(
+                                              activeColor: Color(0xFF06aE71),
+                                              value: Gender.Male,
+                                              groupValue: _gender,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _gender = value;
+                                                  _data['gender'] =
+                                                      describeEnum(_gender);
+                                                });
+                                              },
+                                            ),
+                                            Text('Male'),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.3,
+                                            ),
+                                            Radio(
+                                              activeColor: Color(0xFF06aE71),
+                                              value: Gender.Female,
+                                              groupValue: _gender,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _gender = value;
+                                                  _data['gender'] =
+                                                      describeEnum(_gender);
+                                                });
+                                              },
+                                            ),
+                                            Text('Female'),
+                                          ],
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 20,

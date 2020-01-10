@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 import '../widgets/rounded_button.dart';
 import '../widgets/logo_text.dart';
@@ -32,18 +33,47 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       final response = await http.post(
           'https://ffds-new.herokuapp.com/login?email=${_credentials['email']}&password=${_credentials['password']}');
-
       final responseBody = json.decode(response.body);
+
       if (responseBody['response'] == 'Login successful') {
+        final isVerified = await http.post(
+            'https://ffds-new.herokuapp.com/verifyemail?email=${_credentials['email']}');
+        final isVerifiedMessage = json.decode(isVerified.body);
+        print(isVerifiedMessage);
+        if (isVerifiedMessage == 'email not verified') {
+          await AwesomeDialog(
+            context: context,
+            dialogType: DialogType.WARNING,
+            animType: AnimType.BOTTOMSLIDE,
+            tittle: 'Email Not Verified',
+            desc: 'Your email is not verified. Please verify your email.',
+            btnOkOnPress: () {},
+          ).show();
+          setState(() {
+            _isLoading = false;
+          });
+          return;
+        }
         print('Mubarak Ho! Aapko jald hi ladki mil jaegi');
-      } else {
-        showDialog(
+      } else if (responseBody['response'] == 'Invalid Password') {
+        await AwesomeDialog(
           context: context,
-          child: AlertDialog(
-            title: Text('Error'),
-            content: Text(responseBody),
-          ),
-        );
+          dialogType: DialogType.ERROR,
+          animType: AnimType.BOTTOMSLIDE,
+          tittle: 'Invalid Credentials',
+          desc: 'Email and Password combination do no match.',
+          btnOkOnPress: () {},
+        ).show();
+      } else {
+        await AwesomeDialog(
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.BOTTOMSLIDE,
+          tittle: 'Invalid Email',
+          desc:
+              'This email id is not registered. Please sign up using this email.',
+          btnOkOnPress: () {},
+        ).show();
       }
     } catch (e) {
       print(e);
@@ -134,7 +164,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       'LOGIN',
                                       style: TextStyle(
                                         fontSize: 56,
-                                        fontFamily: 'BarlowSemiCondensed',
                                       ),
                                     ),
                                   ),

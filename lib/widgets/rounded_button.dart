@@ -56,7 +56,7 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: 60.0,
+      height: height,
       decoration: BoxDecoration(
         gradient: gradient,
         borderRadius: BorderRadius.circular(50),

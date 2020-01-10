@@ -1,3 +1,4 @@
+import 'package:ffds/screens/userScreen/tabsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,14 +16,20 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     return MaterialApp(
-      // debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      initialRoute: HomeScreen.routeName,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark().copyWith(
+        textTheme: TextTheme(
+          body1: TextStyle(fontFamily: 'BarlowSemiCondensed'),
+        ),
+      ),
+      // initialRoute: HomeScreen.routeName,
+      initialRoute: TabsScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => HomeScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
         SignupScreen1.routeName: (context) => SignupScreen1(),
         SignupScreen2.routeName: (context) => SignupScreen2(),
+        TabsScreen.routeName: (context) => TabsScreen(),
       },
     );
   }

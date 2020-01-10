@@ -91,7 +91,6 @@ class _SignupScreen1State extends State<SignupScreen1> {
                   'Mobile Number',
                   style: TextStyle(
                     fontSize: 24,
-                    fontFamily: 'BarlowSemiCondensed',
                   ),
                 ),
               ),
@@ -103,7 +102,6 @@ class _SignupScreen1State extends State<SignupScreen1> {
                   'Please enter your mobile number for verification',
                   style: TextStyle(
                     fontSize: 15,
-                    fontFamily: 'BarlowSemiCondensed',
                   ),
                 ),
               ),
@@ -183,7 +181,6 @@ class _SignupScreen1State extends State<SignupScreen1> {
                 'The OTP has been sent to \n${_phoneNumber.text}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'BarlowSemiCondensed',
                   fontSize: 24,
                 ),
               ),
@@ -195,7 +192,6 @@ class _SignupScreen1State extends State<SignupScreen1> {
               child: Text(
                 'Change Number',
                 style: TextStyle(
-                  fontFamily: 'BarlowSemiCondensed',
                   fontSize: 18,
                   color: Color(0xFF06AE71),
                 ),
@@ -216,7 +212,6 @@ class _SignupScreen1State extends State<SignupScreen1> {
               child: Text(
                 'Enter OTP',
                 style: TextStyle(
-                  fontFamily: 'BarlowSemiCondensed',
                   fontSize: 24,
                 ),
               ),
