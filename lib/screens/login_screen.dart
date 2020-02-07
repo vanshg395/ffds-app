@@ -1,10 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:provider/provider.dart';
 
+import '../helper/http_exception.dart';
 import '../widgets/rounded_button.dart';
+import '../helper/auth.dart';
 import '../widgets/logo_text.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,31 +31,18 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
     try {
-      final response = await http.post(
-          'https://ffds-new.herokuapp.com/login?email=${_credentials['email']}&password=${_credentials['password']}');
-      final responseBody = json.decode(response.body);
-
-      if (responseBody['response'] == 'Login successful') {
-        final isVerified = await http.post(
-            'https://ffds-new.herokuapp.com/verifyemail?email=${_credentials['email']}');
-        final isVerifiedMessage = json.decode(isVerified.body);
-        print(isVerifiedMessage);
-        if (isVerifiedMessage == 'email not verified') {
-          await AwesomeDialog(
-            context: context,
-            dialogType: DialogType.WARNING,
-            animType: AnimType.BOTTOMSLIDE,
-            tittle: 'Email Not Verified',
-            desc: 'Your email is not verified. Please verify your email.',
-            btnOkOnPress: () {},
-          ).show();
-          setState(() {
-            _isLoading = false;
-          });
-          return;
-        }
-        print('Mubarak Ho! Aapko jald hi ladki mil jaegi');
-      } else if (responseBody['response'] == 'Invalid Password') {
+      await Provider.of<Auth>(context, listen: false).login(_credentials);
+    } on HttpException catch (e) {
+      if (e.toString() == 'email not verified') {
+        await AwesomeDialog(
+          context: context,
+          dialogType: DialogType.WARNING,
+          animType: AnimType.BOTTOMSLIDE,
+          tittle: 'Email Not Verified',
+          desc: 'Your email is not verified. Please verify your email.',
+          btnOkOnPress: () {},
+        ).show();
+      } else if (e.toString() == 'Invalid Password') {
         await AwesomeDialog(
           context: context,
           dialogType: DialogType.ERROR,
@@ -64,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
           desc: 'Email and Password combination do no match.',
           btnOkOnPress: () {},
         ).show();
-      } else {
+      } else if (e.toString() == 'email not registered') {
         await AwesomeDialog(
           context: context,
           dialogType: DialogType.ERROR,
@@ -74,9 +61,27 @@ class _LoginScreenState extends State<LoginScreen> {
               'This email id is not registered. Please sign up using this email.',
           btnOkOnPress: () {},
         ).show();
+      } else if (e.toString() == 'success') {
+        Navigator.of(context).pop();
+      } else {
+        await AwesomeDialog(
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.BOTTOMSLIDE,
+          tittle: 'Some Error occurred',
+          desc: 'Some error occurred. Could not authenticate you.',
+          btnOkOnPress: () {},
+        ).show();
       }
     } catch (e) {
-      print(e);
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.BOTTOMSLIDE,
+        tittle: 'Some Error occurred',
+        desc: 'Some error occurred. Could not authenticate you.',
+        btnOkOnPress: () {},
+      ).show();
     }
     setState(() {
       _isLoading = false;
@@ -136,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ? Expanded(
                             child: Center(
                               child: CircularProgressIndicator(
-                                backgroundColor: Color(0xFF06aE71),
+                                backgroundColor: Color(0xFF06AE71),
                               ),
                             ),
                           )

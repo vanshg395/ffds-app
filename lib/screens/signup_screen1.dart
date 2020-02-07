@@ -40,7 +40,7 @@ class _SignupScreen1State extends State<SignupScreen1> {
     generateOtp();
     try {
       // final response = await http.post(
-      //     'https://api.msg91.com/api/v5/otp?authkey=309733AvsnLTQSW5e00de5eP1&template_id=5e00e66cd6fc0561ae3cc993&extra_param={"OTP":$_generatedOtp}&mobile=${'+91' + _phoneNumber.text}&invisible=1&otp=OTP to send and verify. If not sent, OTP will be generated.&userip=IPV4 User IP&email=Email ID');
+      // 'https://api.msg91.com/api/v5/otp?authkey=309733AvsnLTQSW5e00de5eP1&template_id=5e00e66cd6fc0561ae3cc993&extra_param={"OTP":$_generatedOtp}&mobile=${'+91' + _phoneNumber.text}&invisible=1&otp=OTP to send and verify. If not sent, OTP will be generated.&userip=IPV4 User IP&email=Email ID');
       // print(response.body);
     } catch (e) {
       print(e);
@@ -55,7 +55,8 @@ class _SignupScreen1State extends State<SignupScreen1> {
     enteredOtp = temp;
     if (_generatedOtp.toString() == enteredOtp) {
       print('Verified');
-      Navigator.of(context).pushReplacementNamed(SignupScreen2.routeName);
+      Navigator.of(context).pushReplacementNamed(SignupScreen2.routeName,
+          arguments: _phoneNumber.text);
     } else {
       print('Invalid Otp');
       enteredOtpController.forEach((digit) {
@@ -142,25 +143,28 @@ class _SignupScreen1State extends State<SignupScreen1> {
             SizedBox(
               height: 40,
             ),
-            RoundedButton(
-              title: 'Send OTP',
-              color: Color(0xFF06AE71),
-              borderColor: Color(0xFF06AE71),
-              onPressed: () {
-                setState(() {
-                  if (_phoneNumber.text.length != 10) {
-                    setState(() {
-                      _errorText = 'Please enter a valid phone number.';
+            Hero(
+              tag: 'signup',
+              child: RoundedButton(
+                title: 'Send OTP',
+                color: Color(0xFF06AE71),
+                borderColor: Color(0xFF06AE71),
+                onPressed: () {
+                  setState(() {
+                    if (_phoneNumber.text.length != 10) {
+                      setState(() {
+                        _errorText = 'Please enter a valid phone number.';
+                      });
+                      return;
+                    }
+                    sendOtp();
+                    enteredOtpController.forEach((digit) {
+                      digit.clear();
                     });
-                    return;
-                  }
-                  sendOtp();
-                  enteredOtpController.forEach((digit) {
-                    digit.clear();
+                    _isOtpSent = true;
                   });
-                  _isOtpSent = true;
-                });
-              },
+                },
+              ),
             ),
           ],
         ),

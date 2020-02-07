@@ -3,12 +3,16 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
+// import '../helper/mailer.dart';
 import '../widgets/logo_text.dart';
 import '../widgets/rounded_button.dart';
+import '../helper/auth.dart';
+import '../helper/http_exception.dart';
 import './login_screen.dart';
 import './home_screen.dart';
+import 'package:http/http.dart' as http;
 
 enum Gender {
   Male,
@@ -31,6 +35,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
     'email': '',
     'password': '',
     'gender': '',
+    'phone': '',
   };
   bool _isLoading = false;
 
@@ -39,22 +44,27 @@ class _SignupScreen2State extends State<SignupScreen2> {
       return;
     }
     _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
     try {
-      setState(() {
-        _isLoading = true;
-      });
-      final response = await http.post(
-          'https://ffds-new.herokuapp.com/register?email=${_data['email']}&name=${_data['name']}&gender=${_data['gender']}&password=${_data['password']}');
-      final responseBody = json.decode(response.body);
-
-      if (responseBody == 'Registered Successful') {
-        final emailResponse = await http.post(
+      await Provider.of<Auth>(context, listen: false).signup(_data);
+    } on HttpException catch (e) {
+      if (e.toString() == 'Mail could not be sent.') {
+        final res = await http.post(
             'https://ffds-new.herokuapp.com/send?mailto=${_data['email']}');
-        final emailResponseBody = json.decode(emailResponse.body);
-
-        if (emailResponseBody == 'error') {
-          throw Exception('Mail could not be sent.');
+        final resBody = json.decode(res.body);
+        if (resBody == 'error') {
+          await AwesomeDialog(
+            context: context,
+            dialogType: DialogType.ERROR,
+            animType: AnimType.BOTTOMSLIDE,
+            tittle: 'Error',
+            desc: 'Some error occurred. Please contact the developer.',
+            btnOkOnPress: () {},
+          ).show();
         }
+      } else if (e.toString() == 'Mail Sent') {
         await AwesomeDialog(
           context: context,
           dialogType: DialogType.SUCCES,
@@ -66,7 +76,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
         ).show();
         Navigator.of(context).pushNamedAndRemoveUntil(
             LoginScreen.routeName, ModalRoute.withName(HomeScreen.routeName));
-      } else {
+      } else if (e.toString() == 'Email exists') {
         await AwesomeDialog(
           context: context,
           dialogType: DialogType.ERROR,
@@ -75,9 +85,26 @@ class _SignupScreen2State extends State<SignupScreen2> {
           desc: 'This email is already in use. Please use some other email.',
           btnOkOnPress: () {},
         ).show();
+      } else {
+        await AwesomeDialog(
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.BOTTOMSLIDE,
+          tittle: 'Some Error occurred',
+          desc: 'Some error occurred. Could not authenticate you.',
+          btnOkOnPress: () {},
+        ).show();
       }
     } catch (e) {
       print(e);
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.BOTTOMSLIDE,
+        tittle: 'Some Error occurred',
+        desc: 'Some error occurred. Could not authenticate you.',
+        btnOkOnPress: () {},
+      ).show();
     }
     setState(() {
       passwordController.clear();
@@ -88,6 +115,9 @@ class _SignupScreen2State extends State<SignupScreen2> {
 
   @override
   Widget build(BuildContext context) {
+    final phoneNo = ModalRoute.of(context).settings.arguments;
+    _data['phone'] = phoneNo.toString();
+
     return Scaffold(
       body: Stack(
         children: <Widget>[

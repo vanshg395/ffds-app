@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../helper/auth.dart';
 import './match_screen.dart';
 import './profile_screen.dart';
 import './feed_screen.dart';
@@ -31,6 +33,10 @@ class _TabsScreenState extends State<TabsScreen> {
         'title': 'Matches',
       },
     ];
+
+    Future.delayed(Duration.zero, () async {
+      await Provider.of<Auth>(context, listen: false).getUserData();
+    });
     super.initState();
   }
 

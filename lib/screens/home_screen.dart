@@ -76,15 +76,18 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(
                       height: 40,
                     ),
-                    RoundedButton(
-                      title: 'SIGN UP',
-                      color: Color(0xFF06AD71),
-                      borderColor: Color(0xFF06AD71),
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(SignupScreen1.routeName);
-                      },
+                    Hero(
+                      tag: 'signup',
+                      child: RoundedButton(
+                        title: 'SIGN UP',
+                        color: Color(0xFF06AD71),
+                        borderColor: Color(0xFF06AD71),
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(SignupScreen1.routeName);
+                        },
+                      ),
                     ),
                   ],
                 ),
