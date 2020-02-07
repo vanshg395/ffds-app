@@ -1,4 +1,4 @@
-package com.example.ffds
+package com.codechefvit.ffds
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
