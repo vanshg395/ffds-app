@@ -61,12 +61,12 @@ class HomeScreen extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Color(0xFF06AD71),
-                            Color(0xFF055E3E),
+                            Color(0xFF06AE71),
+                            Color(0xFF06AE71),
                           ],
                         ),
                         borderColor: Color(0xFF06AD71),
-                        width: MediaQuery.of(context).size.width * 0.7,
+                        width: MediaQuery.of(context).size.width * 0.8,
                         onPressed: () {
                           Navigator.of(context)
                               .pushNamed(LoginScreen.routeName);
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                         title: 'SIGN UP',
                         color: Color(0xFF06AD71),
                         borderColor: Color(0xFF06AD71),
-                        width: MediaQuery.of(context).size.width * 0.7,
+                        width: MediaQuery.of(context).size.width * 0.8,
                         onPressed: () {
                           Navigator.of(context)
                               .pushNamed(SignupScreen1.routeName);

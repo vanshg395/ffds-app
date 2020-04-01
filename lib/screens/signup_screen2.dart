@@ -187,10 +187,20 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
+                                      FittedBox(
+                                        child: Text(
+                                          'Tell Us About You',
+                                          style: TextStyle(fontSize: 36),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 50,
+                                      ),
                                       Text(
                                         'Full Name',
                                         style: TextStyle(
                                           fontSize: 24,
+                                          color: Color(0xFF06aE71),
                                         ),
                                       ),
                                       SizedBox(
@@ -202,24 +212,16 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                           fontSize: 16,
                                         ),
                                         decoration: InputDecoration(
-                                          contentPadding:
-                                              EdgeInsets.symmetric(vertical: 5),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 15),
                                           prefixIcon: Icon(
                                             Icons.person,
-                                            color: Color(0xFFBDB3B3),
+                                            color: Color(0xFF06aE71),
                                             size: 30,
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide:
                                                 BorderSide(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
@@ -246,6 +248,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                         'VIT Gmail',
                                         style: TextStyle(
                                           fontSize: 24,
+                                          color: Color(0xFF06aE71),
                                         ),
                                       ),
                                       SizedBox(
@@ -257,24 +260,16 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                           fontSize: 16,
                                         ),
                                         decoration: InputDecoration(
-                                          contentPadding:
-                                              EdgeInsets.symmetric(vertical: 5),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 15),
                                           prefixIcon: Icon(
                                             Icons.email,
-                                            color: Color(0xFFBDB3B3),
+                                            color: Color(0xFF06aE71),
                                             size: 30,
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide:
                                                 BorderSide(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
@@ -308,6 +303,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                         'Password',
                                         style: TextStyle(
                                           fontSize: 24,
+                                          color: Color(0xFF06aE71),
                                         ),
                                       ),
                                       SizedBox(
@@ -321,24 +317,16 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                         ),
                                         obscureText: true,
                                         decoration: InputDecoration(
-                                          contentPadding:
-                                              EdgeInsets.symmetric(vertical: 5),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 15),
                                           prefixIcon: Icon(
                                             Icons.lock,
-                                            color: Color(0xFFBDB3B3),
+                                            color: Color(0xFF06aE71),
                                             size: 30,
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide:
                                                 BorderSide(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
@@ -368,6 +356,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                         'Confirm Password',
                                         style: TextStyle(
                                           fontSize: 24,
+                                          color: Color(0xFF06aE71),
                                         ),
                                       ),
                                       SizedBox(
@@ -380,24 +369,16 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                         ),
                                         obscureText: true,
                                         decoration: InputDecoration(
-                                          contentPadding:
-                                              EdgeInsets.symmetric(vertical: 5),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 15),
                                           prefixIcon: Icon(
                                             Icons.lock,
-                                            color: Color(0xFFBDB3B3),
+                                            color: Color(0xFF06aE71),
                                             size: 30,
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide:
                                                 BorderSide(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
@@ -425,6 +406,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                         'Gender',
                                         style: TextStyle(
                                           fontSize: 24,
+                                          color: Color(0xFF06aE71),
                                         ),
                                       ),
                                       SizedBox(
@@ -469,7 +451,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 20,
+                                        height: 50,
                                       ),
                                       RoundedButton(
                                         title: 'Register',

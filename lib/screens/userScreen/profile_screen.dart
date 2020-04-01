@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     Future.delayed(Duration.zero, () {
       setState(() {
-        _name = Provider.of<Auth>(context, listen: false).name;
+        _name = Provider.of<Auth>(context, listen: false).name.toUpperCase();
         _gender = Provider.of<Auth>(context, listen: false).gender;
         _phone = Provider.of<Auth>(context, listen: false).phone;
         bio.text = Provider.of<Auth>(context, listen: false).bio;
@@ -102,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Text(
-                        _name.toUpperCase() ?? '',
+                        _name ?? '',
                         style: TextStyle(
                           color: Color(0xFF06AE71),
                           fontSize: 32,

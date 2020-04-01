@@ -148,17 +148,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         : Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 30),
-                            margin: EdgeInsets.symmetric(horizontal: 30),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Color(0xFF06AD71),
-                                  Color(0xFF055E3E),
-                                ],
-                              ),
                             ),
                             child: Form(
                               key: _formKey,
@@ -166,14 +157,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: <Widget>[
                                   FittedBox(
                                     child: Text(
-                                      'LOGIN',
+                                      'WELCOME BACK',
                                       style: TextStyle(
                                         fontSize: 56,
                                       ),
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 30,
+                                    height: 80,
                                   ),
                                   TextFormField(
                                     style: TextStyle(
@@ -182,21 +173,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          EdgeInsets.symmetric(vertical: 5),
+                                          EdgeInsets.symmetric(vertical: 15),
                                       hintText: 'Email',
                                       prefixIcon: Icon(
                                         Icons.email,
-                                        color: Color(0xFFBDB3B3),
+                                        color: Color(0xFF06aE71),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                       filled: true,
                                       fillColor: Colors.white,
@@ -233,21 +218,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          EdgeInsets.symmetric(vertical: 5),
+                                          EdgeInsets.symmetric(vertical: 15),
                                       hintText: 'Password',
                                       prefixIcon: Icon(
                                         Icons.lock,
-                                        color: Color(0xFFBDB3B3),
+                                        color: Color(0xFF06AE71),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                       filled: true,
                                       fillColor: Colors.white,
@@ -270,15 +249,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                     },
                                   ),
                                   SizedBox(
-                                    height: 40,
+                                    height: 80,
                                   ),
                                   Hero(
                                     tag: 'loginButton',
                                     child: RoundedButton(
                                       title: 'LOGIN',
                                       width: MediaQuery.of(context).size.width *
-                                          0.7,
+                                          0.6,
                                       onPressed: _submit,
+                                      borderColor: Color(0xFF06AE71),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          Color(0xFF06AE71),
+                                          Color(0xFF06AE71),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],

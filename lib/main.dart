@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData.dark().copyWith(
               textTheme: TextTheme(
-                body1: TextStyle(fontFamily: 'BarlowSemiCondensed'),
+                body1: TextStyle(fontFamily: 'CircularStdBook'),
               ),
             ),
             // initialRoute: HomeScreen.routeName,

@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 import './http_exception.dart';
 
 class Auth extends ChangeNotifier {
-  String _email = 'vansh.goel2018@vitstudent.ac.in';
+  // String _email = 'vansh.goel2018@vitstudent.ac.in';
+  String _email;
   String _name;
   String _gender;
   String _phone;

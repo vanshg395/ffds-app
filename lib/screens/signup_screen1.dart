@@ -117,18 +117,13 @@ class _SignupScreen1State extends State<SignupScreen1> {
                 fontSize: 16,
               ),
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 5),
+                contentPadding: EdgeInsets.symmetric(vertical: 15),
                 prefixIcon: Icon(
                   Icons.phone,
-                  color: Color(0xFFBDB3B3),
+                  color: Color(0xFF06AE71),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10),
                 ),
                 filled: true,
                 fillColor: Colors.white,
@@ -244,7 +239,6 @@ class _SignupScreen1State extends State<SignupScreen1> {
                         counterText: "",
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5),
                         ),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -383,12 +377,13 @@ class _SignupScreen1State extends State<SignupScreen1> {
                 border: Border.all(
                   color: Color(0xFF06AE71),
                 ),
+                color: Color(0xFF06AE71),
                 borderRadius: BorderRadius.circular(50),
               ),
               child: IconButton(
                 icon: Icon(
                   Icons.navigate_next,
-                  color: Color(0xFF06AE71),
+                  color: Colors.white,
                   size: 30,
                 ),
                 onPressed: () {},

@@ -64,6 +64,9 @@ flutter:
     - family: BarlowSemiCondensed
       fonts:
         - asset: assets/fonts/BarlowSemiCondensed-Regular.ttf
+    - family: CircularStdBook
+      fonts:
+        - asset: assets/fonts/CircularStdBook.ttf
     # - family: SairaCondensed
     #   fonts:
     #     - asset: assets/fonts/SairaCondensed-Regular.ttf
